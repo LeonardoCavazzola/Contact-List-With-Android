@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.androidt2.model.Contact;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText editTextNome;
     private EditText editTextPhone;
     private EditText editTextObs;
-    private Bitmap photo;
+    private Bitmap photo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +94,39 @@ public class AddActivity extends AppCompatActivity {
         String telefone = this.editTextPhone.getText().toString();
         String obs = this.editTextObs.getText().toString();
 
-        Contact contact = new Contact(nome, telefone, this.photo, obs);
+        if(nomeValidate() & phoneValidate()){
+            Contact contact = new Contact(nome, telefone, this.photo, obs);
 
-        /** aqui falta codigo para salvar **/
-        /** também tem que validar os campos **/
+            // aqui falta codigo para salvar
 
-        this.finish();
+
+            this.finish();
+        }
+    }
+
+    public Boolean nomeValidate(){
+        TextInputLayout nomeLayout = findViewById(R.id.nomeLayout);
+        String nome = this.editTextNome.getText().toString();
+
+        if(nome.equals("")){
+            nomeLayout.setError("Nome é obrigatório!");
+            return false;
+        } else {
+            nomeLayout.setError(null);
+            return true;
+        }
+    }
+
+    public Boolean phoneValidate(){
+        TextInputLayout phoneLayout = findViewById(R.id.phoneLayout);
+        String phone = this.editTextPhone.getText().toString();
+
+        if(phone.equals("")){
+            phoneLayout.setError("Telefone é obrigatório!");
+            return false;
+        } else {
+            phoneLayout.setError(null);
+            return true;
+        }
     }
 }

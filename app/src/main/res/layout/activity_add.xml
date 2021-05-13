@@ -42,7 +42,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:boxBackgroundColor="#FFFFFF">
+            android:layout_height="wrap_content" app:boxBackgroundColor="#FFFFFF"
+            android:id="@+id/nomeLayout">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -51,7 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:boxBackgroundColor="@color/white">
+            android:layout_height="wrap_content" app:boxBackgroundColor="@color/white" android:id="@+id/phoneLayout">
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
