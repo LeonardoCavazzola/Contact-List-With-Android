@@ -37,13 +37,13 @@ public class AddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
 
+            Bundle extras = data.getExtras();
             setPhoto((Bitmap) extras.get("data"));
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
 
-            Uri imageUri = data.getData();
             try {
+                Uri imageUri = data.getData();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 setPhoto(bitmap);
             } catch (IOException e) {
@@ -59,17 +59,14 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void permicaoGaleria() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            } else {
-                int PERMISSAO_REQUEST = 2;
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSAO_REQUEST);
-            }
+
+        int permissionGranted = PackageManager.PERMISSION_GRANTED;
+        int checkSelfPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        boolean shouldShowRequestPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if ((checkSelfPermission != permissionGranted) && !shouldShowRequestPermissionRationale) {
+            String[] a = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this, a, 2);
         }
     }
 
