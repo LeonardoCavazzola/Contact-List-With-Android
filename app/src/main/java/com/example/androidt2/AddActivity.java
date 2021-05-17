@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.model.Contact;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -96,9 +97,8 @@ public class AddActivity extends AppCompatActivity {
 
         if(nomeValidate() & phoneValidate()){
             Contact contact = new Contact(nome, telefone, this.photo, obs);
-
-            // aqui falta codigo para salvar
-
+            ContactDao contactDao = new ContactDao(this);
+            contactDao.addContact(contact);
 
             this.finish();
         }
