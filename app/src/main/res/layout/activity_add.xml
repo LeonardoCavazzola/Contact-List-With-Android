@@ -40,38 +40,63 @@
                 app:layout_constraintTop_toBottomOf="@+id/takePictureButton2" android:layout_marginTop="8dp"
                 app:layout_constraintHorizontal_bias="0.288"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:boxBackgroundColor="#FFFFFF"
-            android:id="@+id/nomeLayout">
+        android:id="@+id/nomeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#040303"
+        app:boxBackgroundColor="#FFFFFF">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nome" android:id="@+id/editTextNome" android:layout_weight="1" android:singleLine="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editTextNome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:boxBackgroundColor="@color/white" android:id="@+id/phoneLayout">
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/editTextPhone" android:layout_weight="1" android:hint="Telefone"
-                android:singleLine="true"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Nome"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:boxBackgroundColor="@color/white">
+        android:id="@+id/phoneLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#000000"
+        app:boxBackgroundColor="@color/white">
+
         <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:gravity="start|top"
-                android:ems="10"
-                android:id="@+id/editTextObs" android:layout_weight="1" android:singleLine="false"
-                android:hint="Observação"/>
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Telefone"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:textColor="#090808"
+            android:textColorHint="#000000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="#070707"
+        app:boxBackgroundColor="@color/white">
+
+        <EditText
+            android:id="@+id/editTextObs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Observação"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:textColor="#0E0B0B"
+            android:textColorHint="#020202" />
     </com.google.android.material.textfield.TextInputLayout>
     <Button
             android:text="Gravar"
