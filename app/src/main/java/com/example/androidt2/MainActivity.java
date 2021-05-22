@@ -2,11 +2,17 @@ package com.example.androidt2;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.rvAdapter.ContactAdapter;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +27,25 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(v -> startActivity(new Intent(this, AddActivity.class)));
 
         this.rv = findViewById(R.id.rv);
+        SwipeHelper swipeHelper = new SwipeHelper( this, rv,150){
+
+            @Override
+            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<SwipeHelper.MyButton> buffer) {
+                buffer.add(new MyButton(MainActivity.this,
+                        "Eliminar",
+                        30,
+                        R.drawable.ic_edit_24,
+                        Color.parseColor("FF3C30"),
+                        new MyButtonClickListener(){
+
+                            @Override
+                            public void onClick(int pos) {
+                                Toast.makeText(MainActivity.this,"Eliminar", Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+        };
+
         this.initRV();
     }
 

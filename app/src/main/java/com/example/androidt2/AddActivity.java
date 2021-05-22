@@ -14,11 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.model.Contact;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
