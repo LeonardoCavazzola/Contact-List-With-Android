@@ -3,18 +3,15 @@ package com.example.androidt2;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidt2.dao.ContactDao;
-import com.example.androidt2.model.Contact;
-import com.example.androidt2.rvAdapter.ContactAdapter;
-
-import java.util.List;
+import com.example.androidt2.rv.ContactAdapter;
+import com.example.androidt2.rv.ContactDecoration;
+import com.example.androidt2.rv.ContactTouchHelperCallBack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,24 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.initComponents();
-//        SwipeHelper swipeHelper = new SwipeHelper( this, rv,150){
-//
-//            @Override
-//            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<SwipeHelper.MyButton> buffer) {
-//                buffer.add(new MyButton(MainActivity.this,
-//                        "Eliminar",
-//                        30,
-//                        R.drawable.ic_edit_24,
-//                        Color.parseColor("FF3C30"),
-//                        new MyButtonClickListener(){
-//
-//                            @Override
-//                            public void onClick(int pos) {
-//                                Toast.makeText(MainActivity.this,"Eliminar", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }));
-//            }
-//        };
     }
 
     @Override
@@ -58,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
         this.rv = findViewById(R.id.rv);
         this.contactDao = new ContactDao(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(layoutManager);
+        ContactAdapter adapter = new ContactAdapter(this, contactDao.getAllContacts());//
+        rv.setAdapter(adapter);//
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ContactTouchHelperCallBack());
-        itemTouchHelper.attachToRecyclerView(rv); //faz deslizar
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        setUpItemTouchHelper();
+    }
+
+    private void setUpItemTouchHelper() {//faz deslizar
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ContactTouchHelperCallBack(this, 0, ItemTouchHelper.LEFT));
+        itemTouchHelper.attachToRecyclerView(rv);
+        rv.addItemDecoration(new ContactDecoration());
     }
 
     private void updateRV() {
