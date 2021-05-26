@@ -1,16 +1,21 @@
 package com.example.androidt2.rv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.androidt2.AddActivity;
+import com.example.androidt2.MainActivity;
 import com.example.androidt2.R;
 
 public class ContactTouchHelperCallBack extends ItemTouchHelper.SimpleCallback {
@@ -59,7 +64,7 @@ public class ContactTouchHelperCallBack extends ItemTouchHelper.SimpleCallback {
         if (!initiated) {
             init();
         }
-
+/*
         // draw red background
         background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
         background.draw(c);
@@ -77,6 +82,34 @@ public class ContactTouchHelperCallBack extends ItemTouchHelper.SimpleCallback {
 
         xMark.draw(c);
 
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);*/
+        background.setBounds(itemView.getLeft() + (int) dX/4, itemView.getTop(), itemView.getLeft(), itemView.getBottom());
+        background.draw(c);
+
+        // draw x mark
+        int itemHeight = itemView.getBottom() - itemView.getTop();
+        int intrinsicWidth = xMark.getIntrinsicWidth();
+        int intrinsicHeight = xMark.getIntrinsicWidth();
+
+        int xMarkLeft = itemView.getLeft() - xMarkMargin;
+        int xMarkRight = itemView.getLeft() - xMarkMargin - intrinsicWidth;
+        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight)/2;
+        int xMarkBottom = xMarkTop + intrinsicHeight;
+        xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+
+        xMark.draw(c);
+
+        if (getSwipeDirs(recyclerView, viewHolder) == ItemTouchHelper.RIGHT) { //Verifica a direção
+            //Se é para a direita, vai apena 75% do espaço
+            super.onChildDraw(c, recyclerView, viewHolder, dX/4, dY, actionState, isCurrentlyActive);
+        }
+        else{//Para a esquerda
+            //Vai completamente para a esquerda
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            Intent intent = new Intent(context, AddActivity.class);
+            int id = viewHolder.getAdapterPosition(); //Captura o ID
+            intent.putExtra("key", id);
+            context.startActivity(intent);
+        }
     }
 }

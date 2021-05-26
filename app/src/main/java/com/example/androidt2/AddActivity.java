@@ -29,6 +29,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText editTextPhone;
     private EditText editTextObs;
     private Bitmap photo = null;
+    private ContactDao contactDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,17 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         this.initComponents();
         this.permicaoGaleria();
+        Bundle extra = getIntent().getExtras();
+        int value = -1; // or other values
+        if(extra != null){
+            value = extra.getInt("key");
+            Contact contact = new Contact(null,null,null,null);
+            contact = contactDao.getContact(1);
+            this.editTextNome.setText(Integer.toString(value));
+            //this.editTextPhone.setText(contact.getTelefone());
+            //this.editTextObs.setText(contact.getObservacao());
+            //setPhoto(contact.getFoto());
+        }
     }
 
     @Override

@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ContactTouchHelperCallBack(this, 0, ItemTouchHelper.LEFT));
         itemTouchHelper.attachToRecyclerView(rv);
         rv.addItemDecoration(new ContactDecoration());
+
+        ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ContactTouchHelperCallBack(this, 0, ItemTouchHelper.RIGHT));
+        itemTouchHelper2.attachToRecyclerView(rv);
+        rv.addItemDecoration(new ContactDecoration());
     }
 
     private void updateRV() {
