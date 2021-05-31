@@ -67,6 +67,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, ViewActivity.class);
+                intent.putExtra("ContactID", (int) v.getTag());
                 context.startActivity(intent);
             });
         }
