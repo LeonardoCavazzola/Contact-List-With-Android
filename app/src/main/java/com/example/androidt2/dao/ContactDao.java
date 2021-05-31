@@ -49,18 +49,20 @@ public class ContactDao extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    private byte[] imgToByteArray(Bitmap photo){
+        ByteArrayOutputStream saida = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, saida);
+        return saida.toByteArray();
+    }
+
     public void addContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        ByteArrayOutputStream saida = new ByteArrayOutputStream();
-        contact.getFoto().compress(Bitmap.CompressFormat.PNG, 100, saida);
-        byte[] img = saida.toByteArray();
-
         values.put(NOME, contact.getNome());
         values.put(TELEFONE, contact.getTelefone());
         values.put(OBSERVACAO, contact.getObservacao());
-        values.put(FOTO, img);
+        values.put(FOTO, this.imgToByteArray(contact.getFoto()));
 
         db.insert(TABELA_CONTACTS, null, values);
         db.close();
@@ -85,14 +87,14 @@ public class ContactDao extends SQLiteOpenHelper {
     }
 
     private Contact cursorToContact(Cursor cursor) {
-        //int id = cursor.getInt(0);
+        int id = cursor.getInt(0);
         String nome = cursor.getString(1);
         String telefone = cursor.getString(2);
         String observacao = cursor.getString(3);
         byte[] blob = cursor.getBlob(4);
         Bitmap bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
 
-        return new Contact(nome, telefone, bitmap, observacao);
+        return new Contact(id, nome, telefone, bitmap, observacao);
     }
 
     public List<Contact> getAllContacts() {
@@ -110,29 +112,41 @@ public class ContactDao extends SQLiteOpenHelper {
         return listaLivros;
     }
 
-//    public int updateLivro(Livro livro) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(TITULO, livro.getTitulo());
-//        values.put(AUTOR, livro.getAutor());
-//        values.put(ANO, new Integer(livro.getAno()));
-//        int i = db.update(TABELA_LIVROS, //tabela
-//                values, // valores
-//                ID + " = ?", // colunas para comparar
-//                new String[]
-//                        { String.valueOf(livro.getId()) }); //parâmetros
-//        db.close();
-//        return i; // número de linhas modificadas
-//    }
+    public int updateContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(NOME, contact.getNome());
+        values.put(TELEFONE, contact.getTelefone());
+        values.put(OBSERVACAO, contact.getObservacao());
+        values.put(FOTO, this.imgToByteArray(contact.getFoto()));
+
+        int i = db.update(TABELA_CONTACTS, //tabela
+                values, // valores
+                ID + " = ?", // colunas para comparar
+                new String[]{ String.valueOf(contact.getId()) }); //parâmetros
+        db.close();
+        return i; // número de linhas modificadas
+    }
 
 
-//    public int deleteLivro(Livro livro) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        int i = db.delete(TABELA_LIVROS, //tabela
-//                ID + " = ?", // colunas para comparar
-//                new String[]
-//                        { String.valueOf(livro.getId()) });
-//        db.close();
-//        return i; // número de linhas excluídas
-//    }
+    public int deleteContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int i = db.delete(TABELA_CONTACTS, //tabela
+                ID + " = ?", // colunas para comparar
+                new String[]{ String.valueOf(contact.getId()) });
+        db.close();
+        return i; // número de linhas excluídas
+    }
+
+    public int deleteContactById(Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int i = db.delete(TABELA_CONTACTS, //tabela
+                ID + " = ?", // colunas para comparar
+                new String[]{id.toString()});
+        db.close();
+        return i; // número de linhas excluídas
+    }
 }

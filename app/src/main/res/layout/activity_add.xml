@@ -21,7 +21,7 @@
         <Button
                 android:text="Câmera"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/takePictureButton2"
+                android:layout_height="wrap_content" android:id="@+id/takePictureButton"
                 android:onClick="takePhotoClick"
                 app:icon="@android:drawable/ic_menu_camera"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,17 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPhoto" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/takePictureButton2" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/takePictureButton" android:layout_marginTop="8dp"
                 app:layout_constraintHorizontal_bias="0.288"/>
+        <TextView
+                android:text="Foto é obrigatoria."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/photoHelp"
+                app:layout_constraintTop_toBottomOf="@+id/galleryButton"
+                android:layout_marginTop="12dp" android:textColor="@color/design_default_color_error"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/imageViewPhoto"
+                app:layout_constraintHorizontal_bias="0.337" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" android:visibility="invisible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout

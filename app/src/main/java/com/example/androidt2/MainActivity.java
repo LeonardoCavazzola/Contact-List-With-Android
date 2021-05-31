@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.rv.ContactAdapter;
-import com.example.androidt2.rv.ContactDecoration;
-import com.example.androidt2.rv.ContactTouchHelperCallBack;
+import com.example.androidt2.rv.DeleteContactTouchHelperCallBack;
+import com.example.androidt2.rv.UpdateContactTouchHelperCallBack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,16 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpItemTouchHelper() {//faz deslizar
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ContactTouchHelperCallBack(this, 0, ItemTouchHelper.LEFT));
-        itemTouchHelper.attachToRecyclerView(rv);
-        rv.addItemDecoration(new ContactDecoration());
+        ItemTouchHelper itemTouchHelperU = new ItemTouchHelper(new UpdateContactTouchHelperCallBack(this, 0, ItemTouchHelper.LEFT));
+        itemTouchHelperU.attachToRecyclerView(rv);
 
-        ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ContactTouchHelperCallBack(this, 0, ItemTouchHelper.RIGHT));
-        itemTouchHelper2.attachToRecyclerView(rv);
-        rv.addItemDecoration(new ContactDecoration());
+        ItemTouchHelper itemTouchHelperD = new ItemTouchHelper(new DeleteContactTouchHelperCallBack(this, 0, ItemTouchHelper.RIGHT));
+        itemTouchHelperD.attachToRecyclerView(rv);
     }
 
-    private void updateRV() {
+    public void updateRV() {
         ContactAdapter adapter = new ContactAdapter(this, contactDao.getAllContacts());
         rv.setAdapter(adapter);
     }

@@ -4,24 +4,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.model.Contact;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
-import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -30,6 +27,11 @@ public class AddActivity extends AppCompatActivity {
     private EditText editTextObs;
     private Bitmap photo = null;
     private ContactDao contactDao;
+    private int operacao = AddActivity.CREATE;
+    private int idUpdate;
+
+    public static int CREATE = 1;
+    public static int UPDATE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +39,22 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         this.initComponents();
         this.permicaoGaleria();
+        this.checkUpdate();
+    }
+
+    private void checkUpdate(){
         Bundle extra = getIntent().getExtras();
-        int value = -1; // or other values
+        int value;
         if(extra != null){
-            value = extra.getInt("key");
-            Contact contact = new Contact(null,null,null,null);
-            contact = contactDao.getContact(1);
-            this.editTextNome.setText(Integer.toString(value));
-            //this.editTextPhone.setText(contact.getTelefone());
-            //this.editTextObs.setText(contact.getObservacao());
-            //setPhoto(contact.getFoto());
+            value = extra.getInt("ContactID");
+            Contact contact = contactDao.getContact(value);
+
+            this.editTextNome.setText(contact.getNome());
+            this.editTextPhone.setText(contact.getTelefone());
+            this.editTextObs.setText(contact.getObservacao());
+            this.setPhoto(contact.getFoto());
+            this.operacao = AddActivity.UPDATE;
+            this.idUpdate = contact.getId();
         }
     }
 
@@ -73,6 +81,7 @@ public class AddActivity extends AppCompatActivity {
         this.editTextNome = findViewById(R.id.editTextNome);
         this.editTextPhone = findViewById(R.id.editTextPhone);
         this.editTextObs = findViewById(R.id.editTextObs);
+        this.contactDao = new ContactDao(this);
     }
 
     private void permicaoGaleria() {
@@ -110,11 +119,14 @@ public class AddActivity extends AppCompatActivity {
         String telefone = this.editTextPhone.getText().toString();
         String obs = this.editTextObs.getText().toString();
 
-        if(nomeValidate() & phoneValidate()){
-            Contact contact = new Contact(nome, telefone, this.photo, obs);
-            ContactDao contactDao = new ContactDao(this);
-            contactDao.addContact(contact);
-
+        if(nomeValidate() & phoneValidate() & photoValidate()){
+            if(this.operacao == AddActivity.CREATE) {
+                Contact contact = new Contact(nome, telefone, this.photo, obs);
+                this.contactDao.addContact(contact);
+            } else {
+                Contact contact = new Contact(idUpdate ,nome, telefone, this.photo, obs);
+                this.contactDao.updateContact(contact);
+            }
             this.finish();
         }
     }
@@ -141,6 +153,29 @@ public class AddActivity extends AppCompatActivity {
             return false;
         } else {
             phoneLayout.setError(null);
+            return true;
+        }
+    }
+
+    public Boolean photoValidate(){
+        Button takePictureButton = findViewById(R.id.takePictureButton);
+        Button galleryButton = findViewById(R.id.galleryButton);
+        TextView photoHelp = findViewById(R.id.photoHelp);
+
+        if(this.photo == null){
+            int colorError = Color.parseColor("#B00020");
+
+            takePictureButton.setBackgroundColor(colorError);
+            galleryButton.setBackgroundColor(colorError);
+            photoHelp.setVisibility(View.VISIBLE);
+            return false;
+        }
+        else {
+            int color = Color.parseColor("#2c2c2c");
+
+            takePictureButton.setBackgroundColor(color);
+            galleryButton.setBackgroundColor(color);
+            photoHelp.setVisibility(View.INVISIBLE);
             return true;
         }
     }
