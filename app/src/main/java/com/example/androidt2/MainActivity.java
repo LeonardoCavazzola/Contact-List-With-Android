@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidt2.dao.ContactDao;
 import com.example.androidt2.rv.ContactAdapter;
@@ -22,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Lista de Contatos");
 
         this.initComponents();
     }
@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         ContactAdapter adapter = new ContactAdapter(this, contactDao.getAllContacts());//
         rv.setAdapter(adapter);//
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
         setUpItemTouchHelper();
     }
 

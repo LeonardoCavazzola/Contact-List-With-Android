@@ -40,6 +40,7 @@ public class AddActivity extends AppCompatActivity {
         this.initComponents();
         this.permicaoGaleria();
         this.checkUpdate();
+        setTitle("Adicionar/Atualizar Contato");
     }
 
     private void checkUpdate(){

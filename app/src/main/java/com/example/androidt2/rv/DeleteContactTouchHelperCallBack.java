@@ -1,7 +1,7 @@
 package com.example.androidt2.rv;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -48,11 +48,22 @@ public class DeleteContactTouchHelperCallBack extends ItemTouchHelper.SimpleCall
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDir) {
-        int contactId = (int) viewHolder.itemView.getTag();
 
-        ContactDao contactDao = new ContactDao(context);
-        contactDao.deleteContactById(contactId);
-        ((MainActivity) context).updateRV();
+        new AlertDialog.Builder(context)
+                .setMessage("Tem certeza que deseja deletar esse contato?")
+                .setTitle("Deletar Contato")
+                .setPositiveButton("Sim", (dialog, id) -> {
+                    int contactId = (int) viewHolder.itemView.getTag();
+
+                    ContactDao contactDao = new ContactDao(context);
+                    contactDao.deleteContactById(contactId);
+                    ((MainActivity) context).updateRV();
+                })
+                .setNegativeButton("Não", (dialog, id) -> {
+                    ((MainActivity) context).updateRV();
+                })
+                .create()
+                .show();
     }
 
     @Override
@@ -78,7 +89,7 @@ public class DeleteContactTouchHelperCallBack extends ItemTouchHelper.SimpleCall
 
         int xMarkLeft = xMarkMargin;
         int xMarkRight = intrinsicWidth + xMarkMargin;
-        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight)/2;
+        int xMarkTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
         int xMarkBottom = xMarkTop + intrinsicHeight;
         xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
 

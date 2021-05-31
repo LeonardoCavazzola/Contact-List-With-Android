@@ -1,6 +1,7 @@
 package com.example.androidt2.rv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidt2.R;
+import com.example.androidt2.ViewActivity;
 import com.example.androidt2.model.Contact;
 
 import java.util.List;
@@ -63,6 +65,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public ContactViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ViewActivity.class);
+                context.startActivity(intent);
+            });
         }
     }
 

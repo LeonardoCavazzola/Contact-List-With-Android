@@ -12,7 +12,8 @@
             android:clickable="true" app:srcCompat="@android:drawable/ic_input_add"
             android:id="@+id/floatingActionButton"
             android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            android:backgroundTint="#FF00AA"/>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
