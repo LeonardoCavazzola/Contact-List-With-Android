@@ -8,18 +8,28 @@
         tools:context=".ViewActivity" android:id="@+id/linearLayout3">
 
     <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp" android:id="@+id/imageViewView"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
+        android:id="@+id/imageViewView"
+        android:layout_width="167dp"
+        android:layout_height="167dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-            android:text="Telefonar"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content" android:id="@+id/button"
-            app:layout_constraintStart_toEndOf="@+id/imageViewView"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintTop_toTopOf="@+id/imageViewView" android:layout_marginTop="75dp"
-            app:layout_constraintHorizontal_bias="0.529" app:icon="@android:drawable/stat_sys_phone_call"/>
+        android:id="@+id/button"
+        android:layout_width="160dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:text="Telefonar"
+        app:icon="@android:drawable/stat_sys_phone_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintStart_toEndOf="@+id/imageViewView"
+        app:layout_constraintTop_toTopOf="@+id/imageViewView" />
+
     <TextView
             android:text="Nome:"
             android:layout_width="wrap_content"
